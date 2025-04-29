@@ -20,6 +20,9 @@ inputs:
   rnef-build-extra-params:
     description: 'Extra parameters to pass to "rnef build:android"'
     required: false
+  rnef-build-env-vars:
+    description: 'Environment variables to pass to "rnef build:android"'
+    required: false
   sign:
     description: 'Whether to sign the build with release keystore'
     required: false
@@ -176,7 +179,7 @@ runs:
     - name: Build Android
       if: ${{ !steps.find-artifact.outputs.artifact-url }}
       run: |
-        npx rnef build:android \
+        ${{ inputs.rnef-build-env-vars }} npx rnef build:android \
           --variant "${{ inputs.variant }}" \
           ${{ inputs.rnef-build-extra-params }}
       shell: bash
